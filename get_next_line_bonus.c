@@ -6,7 +6,7 @@
 /*   By: lsomrat <lsomrat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 23:41:15 by lsomrat           #+#    #+#             */
-/*   Updated: 2022/04/07 15:30:42 by lsomrat          ###   ########.fr       */
+/*   Updated: 2022/04/07 22:50:19 by lsomrat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 char	*get_next_line(int fd)
 {
-	static t_list	*buff[1000];
+	static t_list	*buff[1024];
 	t_list			*next;
 	char			*line;
 
 	if (fd < 0 || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	read_file(fd, &buff[fd]);
-	if (buff[fd] == NULL)
+	if (!(read_file(fd, &buff[fd])))
 		return (NULL);
-	get_line(buff[fd], &line);
+	if (!(get_line(buff[fd], &line)))
+		return (NULL);
 	clear_buff(&buff[fd]);
 	if (line[0] == '\0')
 	{

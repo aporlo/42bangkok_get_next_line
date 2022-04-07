@@ -6,7 +6,7 @@
 /*   By: lsomrat <lsomrat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 23:28:59 by lsomrat           #+#    #+#             */
-/*   Updated: 2022/04/07 13:47:32 by lsomrat          ###   ########.fr       */
+/*   Updated: 2022/04/07 22:42:37 by lsomrat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	get_newline(t_list *buff)
 	return (0);
 }
 
-void	generate_line(char **line, t_list *buff)
+char	*generate_line(char **line, t_list *buff)
 {
 	int	i;
 	int	len;
@@ -91,6 +91,9 @@ void	generate_line(char **line, t_list *buff)
 		buff = buff->next;
 	}
 	*line = malloc(sizeof(char) * (len + 1));
+	if (*line == NULL)
+		return (NULL);
+	return (*line);
 }
 
 t_list	*get_last(t_list *buff)

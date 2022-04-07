@@ -6,7 +6,7 @@
 /*   By: lsomrat <lsomrat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 23:09:24 by lsomrat           #+#    #+#             */
-/*   Updated: 2022/04/07 15:33:38 by lsomrat          ###   ########.fr       */
+/*   Updated: 2022/04/07 22:40:58 by lsomrat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ char	*get_next_line(int fd)
 
 	if ((fd < 0) || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	read_file(fd, &buff);
-	if (buff == NULL)
+	if (!(read_file(fd, &buff)))
 		return (NULL);
-	get_line(buff, &line);
+	if (!(get_line(buff, &line)))
+		return (NULL);
 	clear_buff(&buff);
 	if (line[0] == '\0')
 	{
