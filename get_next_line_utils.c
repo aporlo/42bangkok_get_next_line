@@ -6,7 +6,7 @@
 /*   By: lsomrat <lsomrat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 23:28:59 by lsomrat           #+#    #+#             */
-/*   Updated: 2022/04/07 02:37:22 by lsomrat          ###   ########.fr       */
+/*   Updated: 2022/04/07 13:47:32 by lsomrat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,17 @@ void	save_readed(t_list **buff, char *buf, int readed)
 		return ;
 	i = 0;
 	while (buf[i] && i < readed)
-		new->content[i++] = buf[i++];
+	{
+		new->content[i] = buf[i];
+		i++;
+	}
 	new->content[i] = '\0';
 	if (*buff == NULL)
 	{
 		*buff = new;
 		return ;
 	}
-	last = buff;
-	while (last && last->next)
-		last = last->next;
+	last = get_last(*buff);
 	last->next = new;
 }
 
@@ -57,9 +58,7 @@ int	get_newline(t_list *buff)
 
 	if (buff == NULL)
 		return (0);
-	current = buff;
-	while (current && current->next)
-		current = current->next;
+	current = get_last(buff);
 	i = 0;
 	while (current->content[i])
 	{
@@ -94,17 +93,12 @@ void	generate_line(char **line, t_list *buff)
 	*line = malloc(sizeof(char) * (len + 1));
 }
 
-void	free_buff(t_list *buff)
+t_list	*get_last(t_list *buff)
 {
 	t_list	*current;
-	t_list	*next;
 
 	current = buff;
-	while (current)
-	{
-		free(current->content);
-		next = current->next;
-		free(current);
-		current = next;
-	}
+	while (current && current->next)
+		current = current->next;
+	return (current);
 }

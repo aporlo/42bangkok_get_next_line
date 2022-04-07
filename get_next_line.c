@@ -6,7 +6,7 @@
 /*   By: lsomrat <lsomrat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 23:09:24 by lsomrat           #+#    #+#             */
-/*   Updated: 2022/04/07 02:34:37 by lsomrat          ###   ########.fr       */
+/*   Updated: 2022/04/07 15:33:38 by lsomrat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*get_next_line(int fd)
 {
 	static t_list	*buff;
+	t_list			*next;
 	char			*line;
 
 	if ((fd < 0) || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
@@ -26,7 +27,13 @@ char	*get_next_line(int fd)
 	clear_buff(&buff);
 	if (line[0] == '\0')
 	{
-		free_buff(buff);
+		while (buff)
+		{
+			free(buff->content);
+			next = buff->next;
+			free(buff);
+			buff = next;
+		}
 		buff = NULL;
 		free(line);
 		return (NULL);
@@ -58,14 +65,14 @@ char	*read_file(int fd, t_list **buff)
 	return (buffer);
 }
 
-void	get_line(t_list *buff, char **line)
+char	*get_line(t_list *buff, char **line)
 {
 	int	i;
 	int	j;
 
 	generate_line(line, buff);
 	if (*line == NULL)
-		return ;
+		return (NULL);
 	j = 0;
 	while (buff)
 	{
@@ -82,6 +89,7 @@ void	get_line(t_list *buff, char **line)
 		buff = buff->next;
 	}
 	(*line)[j] = '\0';
+	return (*line);
 }
 
 t_list	*clear_buff(t_list **buff)
@@ -115,7 +123,7 @@ t_list	*clear_buff(t_list **buff)
 
 t_list	*clear_content(t_list *last, t_list *clear, int i)
 {
-	int		j;
+	int	j;
 
 	j = 0;
 	clear->content = malloc(sizeof(char)

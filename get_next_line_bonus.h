@@ -6,7 +6,7 @@
 /*   By: lsomrat <lsomrat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 23:43:12 by lsomrat           #+#    #+#             */
-/*   Updated: 2022/04/06 22:59:44 by lsomrat          ###   ########.fr       */
+/*   Updated: 2022/04/07 15:31:18 by lsomrat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ char	*read_file(int fd, t_list **buff);
 char	*get_line(t_list *buff, char **line);
 void	save_readed(t_list **buff, char *buf, int readed);
 void	generate_line(char **line, t_list *buff);
-void	clear_buff(t_list **buff);
-void	free_buff(t_list *buff);
 int		get_newline(t_list *buff);
 size_t	ft_strlen(const char *s);
 t_list	*get_last(t_list *buff);
+t_list	*clear_buff(t_list **buff);
+t_list	*clear_content(t_list *last, t_list *clear, int i);
 #endif
